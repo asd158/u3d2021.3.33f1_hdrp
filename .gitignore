@@ -3,4 +3,7 @@
 /Logs
 /*.csproj
 /*.sln
-/UserSettings
+UserSettings
+.idea
+obj
+bin
