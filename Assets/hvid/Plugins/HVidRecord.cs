@@ -3,24 +3,56 @@ using System.Runtime.InteropServices;
 
 public static class HVidRecord
 {
-    private const string LIBNAME = "hvidrec";
+    public static IntPtr Open(int work_gpu, int v_width, int v_height, int framerate, int level, string export_dir)
+    {
+        return HVidRecBridge.hvid_record_open(work_gpu, v_width, v_height, framerate, level, export_dir);
+    }
 
-    [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-    public static extern
-        IntPtr hvid_record_open(int work_gpu, int v_width, int v_height, int framerate, int level, string export_dir);
+    public static int GetVideoFrameBuffsize(IntPtr intPtr)
+    {
+        return HVidRecBridge.hvid_record_get_vid_frame_buffsize(intPtr);
+    }
 
-    [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int hvid_record_get_vid_frame_buffsize(IntPtr inst_id);
+    public static int GetVideoFrameCount(IntPtr intPtr)
+    {
+        return HVidRecBridge.hvid_record_get_vid_frame_count(intPtr);
+    }
 
-    [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int hvid_record_get_vid_frame_count(IntPtr inst_id);
+    public static bool WriteVideoRawdata(IntPtr intPtr, Byte[] vidbBuffer, bool isFinalBuff)
+    {
+        IntPtr intPPtr = Marshal.AllocHGlobal(vidbBuffer.Length * sizeof(char));
+        int ret;
+        try
+        {
+            ret = HVidRecBridge.hvid_record_write_vid(intPtr, intPPtr, vidbBuffer.Length, isFinalBuff);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(intPPtr);
+        }
 
-    [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int hvid_record_write_vid(IntPtr inst_id, IntPtr vid_buff, int vid_buff_size, bool is_final);
+        return ret == 0;
+    }
 
-    [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int hvid_record_write_aud(IntPtr inst_id, IntPtr aud_buff, int aud_buff_size, bool is_final);
+    public static bool WriteAudioRawdata(IntPtr intPtr, Byte[] audBuffer, bool isFinalBuff)
+    {
+        IntPtr intPPtr = Marshal.AllocHGlobal(audBuffer.Length * sizeof(char));
+        int ret;
+        try
+        {
+            ret = HVidRecBridge.hvid_record_write_aud(intPtr, intPPtr, audBuffer.Length, isFinalBuff);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(intPPtr);
+        }
 
-    [DllImport(LIBNAME, CallingConvention = CallingConvention.Cdecl)]
-    public static extern int hvid_record_close(IntPtr inst_id);
+        return ret == 0;
+    }
+
+    public static bool Close(IntPtr intPtr)
+    {
+        int ret = HVidRecBridge.hvid_record_close(intPtr);
+        return ret == 0;
+    }
 }
