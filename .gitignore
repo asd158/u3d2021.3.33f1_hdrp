@@ -3,4 +3,8 @@
 /Logs
 /*.csproj
 /*.sln
-/UserSettings
+UserSettings
+.idea
+obj
+bin
+hrdp_str.sln.DotSettings.user
