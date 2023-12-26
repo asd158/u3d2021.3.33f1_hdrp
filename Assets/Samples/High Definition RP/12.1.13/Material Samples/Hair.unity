@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 4
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveTarget: {fileID: 530853073}
+  _mainCamera: {fileID: 1669185312285191868}
 --- !u!1001 &768976822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -654,7 +655,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669185312285191856}
   m_LocalRotation: {x: 0.018505497, y: -0.98260796, z: 0.16406482, w: 0.08498231}
-  m_LocalPosition: {x: 0.36, y: 1.14, z: 2.27}
+  m_LocalPosition: {x: 0.83, y: 2.36, z: 6.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
